@@ -1,6 +1,5 @@
 <template>
-	<div>메인</div>
-	<router-view></router-view>
+	<div>로그인</div>
 </template>
 
 <script setup></script>

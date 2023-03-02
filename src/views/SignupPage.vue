@@ -1,6 +1,5 @@
 <template>
-	<div>메인</div>
-	<router-view></router-view>
+	<div>회원가입</div>
 </template>
 
 <script setup></script>
