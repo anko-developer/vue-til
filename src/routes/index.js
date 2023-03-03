@@ -1,27 +1,24 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import LoginPgae from '@/views/LoginPage.vue';
-import SignupPage from '@/views/SignupPage.vue';
-import NotFoundView from '@/views/NotFoundView.vue';
 
 const routes = [
 	{
 		path: '/',
-		component: LoginPgae,
+		redirect: '/login',
 	},
 	{
 		path: '/login',
 		name: 'Login',
-		component: LoginPgae,
+		component: () => import('@/views/LoginPage.vue'),
 	},
 	{
-		path: '/sign',
-		name: 'Sign',
-		component: SignupPage,
+		path: '/signup',
+		name: 'Signup',
+		component: () => import('@/views/SignupPage.vue'),
 	},
 	{
 		path: '/:pathMatch(.*)*',
 		name: 'NotFound',
-		component: NotFoundView,
+		component: () => import('@/views/NotFoundView.vue'),
 	},
 ];
 
