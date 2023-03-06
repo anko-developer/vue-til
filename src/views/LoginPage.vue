@@ -1,7 +1,10 @@
 <template>
-	<div>로그인</div>
+	<h1>로그인 페이지</h1>
+	<LoginForm></LoginForm>
 </template>
 
-<script setup></script>
+<script setup>
+import LoginForm from '@/components/LoginForm.vue';
+</script>
 
 <style lang="scss" scoped></style>
