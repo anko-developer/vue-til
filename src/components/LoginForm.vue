@@ -32,10 +32,14 @@
 import { ref, computed } from 'vue';
 import { loginUser } from '@/api';
 import { validateEmail } from '@/utils/validation';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 const username = ref('');
 const password = ref('');
 const logMessage = ref('');
+const router = useRouter();
+const store = useStore();
 
 const isUsernameValid = computed(() => {
 	return validateEmail(username.value);
@@ -50,8 +54,8 @@ const submitForm = async () => {
 		};
 
 		const { data } = await loginUser(userData);
-		logMessage.value = `${data.user.username}님 환영합니다.`;
-		// initForm();
+		router.push({ name: 'main' });
+		store.commit('setUsername', data.user.username);
 	} catch (error) {
 		// 에러 핸들링할 코드
 		logMessage.value = error.response.data;

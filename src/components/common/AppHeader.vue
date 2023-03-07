@@ -7,13 +7,35 @@
 			</router-link>
 		</div>
 		<div class="navigations">
-			<router-link to="/login">로그인</router-link>
-			<router-link to="/signup">회원가입</router-link>
+			<template v-if="isUserLogin">
+				<span>{{ store.state.username }}</span>
+				<a href="#" @click.prevent="logoutUser">로그아웃</a>
+			</template>
+			<template v-else>
+				<router-link to="/login">로그인</router-link>
+				<router-link to="/signup">회원가입</router-link>
+			</template>
 		</div>
 	</header>
 </template>
 
-<script setup></script>
+<script setup>
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+
+const store = useStore();
+const router = useRouter();
+
+const isUserLogin = computed(() => {
+	return store.getters.isLogin;
+});
+
+const logoutUser = () => {
+	store.commit('clearUsername');
+	router.push({ name: 'main' });
+};
+</script>
 
 <style scoped>
 .username {

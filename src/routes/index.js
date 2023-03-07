@@ -7,13 +7,18 @@ const routes = [
 	},
 	{
 		path: '/login',
-		name: 'Login',
+		name: 'login',
 		component: () => import('@/views/LoginPage.vue'),
 	},
 	{
 		path: '/signup',
-		name: 'Signup',
+		name: 'signup',
 		component: () => import('@/views/SignupPage.vue'),
+	},
+	{
+		path: '/main',
+		name: 'main',
+		component: () => import('@/views/MainPage.vue'),
 	},
 	{
 		path: '/:pathMatch(.*)*',
