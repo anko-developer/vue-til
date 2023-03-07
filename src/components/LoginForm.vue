@@ -1,26 +1,45 @@
 <template>
-	<form @submit.prevent="submitForm">
-		<div>
-			<label for="username"></label>
-			<input id="username" type="text" v-model="username" />
+	<div class="contents">
+		<div class="form-wrapper form-wrapper-sm">
+			<form @submit.prevent="submitForm" class="form">
+				<div>
+					<label for="username">id:</label>
+					<input id="username" type="text" v-model="username" />
+					<p class="validation-text">
+						<span class="warning" v-if="!isUsernameValid && username">
+							Please enter an email address
+						</span>
+					</p>
+				</div>
+				<div>
+					<label for="password">pw:</label>
+					<input id="password" type="text" v-model="password" />
+				</div>
+				<button
+					:disabled="!isUsernameValid || !password"
+					type="submit"
+					class="btn"
+				>
+					로그인
+				</button>
+			</form>
+			<p class="log">{{ logMessage }}</p>
 		</div>
-		<div>
-			<label for="password"></label>
-			<input id="password" type="password" v-model="password" />
-		</div>
-		<button type="submit">로그인</button>
-		<p>{{ logMessage }}</p>
-	</form>
+	</div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { loginUser } from '@/api';
 import { validateEmail } from '@/utils/validation';
 
 const username = ref('');
 const password = ref('');
 const logMessage = ref('');
+
+const isUsernameValid = computed(() => {
+	return validateEmail(username.value);
+});
 
 const submitForm = async () => {
 	try {

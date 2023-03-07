@@ -7,4 +7,7 @@
 import AppHeader from './components/common/AppHeader.vue';
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+@import './assets/css/reset.css';
+@import './assets/css/common.css';
+</style>
