@@ -3,13 +3,15 @@
 		<div>
 			<router-link to="/" class="logo">
 				TIL
-				<span>by Anko</span>
+				<span v-if="isUserLogin">by {{ $store.state.username }}</span>
 			</router-link>
 		</div>
 		<div class="navigations">
 			<template v-if="isUserLogin">
 				<span>{{ store.state.username }}</span>
-				<a href="#" @click.prevent="logoutUser">로그아웃</a>
+				<a href="#" @click.prevent="logoutUser" class="logout-button"
+					>로그아웃</a
+				>
 			</template>
 			<template v-else>
 				<router-link to="/login">로그인</router-link>

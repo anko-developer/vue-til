@@ -54,8 +54,9 @@ const submitForm = async () => {
 		};
 
 		const { data } = await loginUser(userData);
-		router.push({ name: 'main' });
+		store.commit('setToken', data.token);
 		store.commit('setUsername', data.user.username);
+		router.push({ name: 'main' });
 	} catch (error) {
 		// 에러 핸들링할 코드
 		logMessage.value = error.response.data;
