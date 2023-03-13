@@ -30,7 +30,6 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import { loginUser } from '@/api';
 import { validateEmail } from '@/utils/validation';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
@@ -53,9 +52,8 @@ const submitForm = async () => {
 			password: password.value,
 		};
 
-		const { data } = await loginUser(userData);
-		store.commit('setToken', data.token);
-		store.commit('setUsername', data.user.username);
+		// 비동기처리 후에 아래 router에 진입해야하기 때문에 await를 반드시 넣어줄 것
+		await store.dispatch('LOGIN', userData);
 		router.push({ name: 'main' });
 	} catch (error) {
 		// 에러 핸들링할 코드
