@@ -10,6 +10,7 @@
 					v-for="(postItem, index) in postItems"
 					:key="index"
 					:item="postItem"
+					@refresh="fetchData"
 				/>
 			</ul>
 		</template>
@@ -21,7 +22,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { fetchPosts } from '@/api/index';
+import { fetchPosts } from '@/api/posts';
 import PostListItem from '@/components/posts/PostListItem.vue';
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 
@@ -32,7 +33,6 @@ const fetchData = async () => {
 	const { data } = await fetchPosts();
 	isLoading.value = false;
 	postItems.value = data.posts;
-	console.log(data);
 };
 
 fetchData();

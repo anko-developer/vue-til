@@ -1,6 +1,6 @@
 <template>
 	<div class="contents">
-		<h1 class="page-header">Create Post</h1>
+		<h1 class="page-header">Edit Post</h1>
 		<div class="form-wrapper">
 			<form class="form" @submit.prevent="submitForm">
 				<div>
@@ -21,7 +21,7 @@
 						</p>
 					</template>
 				</div>
-				<button class="btn" type="submit">Create</button>
+				<button class="btn" type="submit">Edit</button>
 			</form>
 			<p class="log">{{ logMessage }}</p>
 		</div>
@@ -29,14 +29,17 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { createPost } from '@/api/posts';
-import { useRouter } from 'vue-router';
+import { ref, computed, defineEmits } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { fetchPost, editPost } from '@/api/posts';
+import bus from '@/utils/bus.js';
 
+const route = useRoute();
 const router = useRouter();
 const title = ref('');
 const contents = ref('');
 const logMessage = ref(null);
+const emit = defineEmits(['refresh']);
 
 const isTitleValid = computed(() => {
 	return title.value.length <= 10;
@@ -46,17 +49,25 @@ const isContentsValid = computed(() => {
 	return contents.value.length <= 200;
 });
 
+const created = async () => {
+	const id = route.params.id;
+	const { data } = await fetchPost(id);
+	title.value = data.title;
+	contents.value = data.contents;
+};
+created();
+
 const submitForm = async () => {
+	const id = route.params.id;
 	try {
-		const { data } = await createPost({
+		await editPost(id, {
 			title: title.value,
 			contents: contents.value,
 		});
+		bus.emit('refresh');
 		router.push({ name: 'main' });
-		console.log(data);
 	} catch (error) {
-		logMessage.value = error.response.data.message;
-		console.log(error.response.data.message);
+		logMessage.value = error;
 	}
 };
 </script>

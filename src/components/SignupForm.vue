@@ -22,18 +22,17 @@
 </template>
 
 <script setup>
-import { registerUser } from '@/api';
-import { ref, computed } from 'vue';
-import { validateEmail } from '@/utils/validation';
+import { registerUser } from '@/api/auth';
+import { ref } from 'vue';
 
 const username = ref(null);
 const password = ref(null);
 const nickname = ref(null);
 const logMessage = ref('');
 
-const isUsernameValid = computed(() => {
-	return validateEmail(username.value);
-});
+// const isUsernameValid = computed(() => {
+// 	return validateEmail(username.value);
+// });
 
 const submitForm = async () => {
 	const userData = {

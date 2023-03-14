@@ -26,6 +26,10 @@ const routes = [
 		component: () => import('@/views/PostAddPage.vue'),
 	},
 	{
+		path: '/post/:id',
+		component: () => import('@/views/PostEditPage.vue'),
+	},
+	{
 		path: '/:pathMatch(.*)*',
 		name: 'NotFound',
 		component: () => import('@/views/NotFoundPage.vue'),
