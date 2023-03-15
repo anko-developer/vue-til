@@ -21,8 +21,8 @@ function deletePost(postId) {
 }
 
 // 학습 노트 데이터를 수정하는 API
-function editPost(postId) {
-	return posts.put(postId);
+function editPost(postId, postData) {
+	return posts.put(postId, postData);
 }
 
 export { fetchPost, fetchPosts, createPost, deletePost, editPost };

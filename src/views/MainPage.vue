@@ -21,11 +21,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, inject } from 'vue';
 import { fetchPosts } from '@/api/posts';
 import PostListItem from '@/components/posts/PostListItem.vue';
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 
+const emitter = inject('emitter');
 const isLoading = ref(false);
 const postItems = ref([]);
 const fetchData = async () => {
@@ -33,9 +34,12 @@ const fetchData = async () => {
 	const { data } = await fetchPosts();
 	isLoading.value = false;
 	postItems.value = data.posts;
+	console.log('data', data);
+	console.log('postItems.value', postItems.value);
 };
-
 fetchData();
+
+emitter.on('refresh', fetchData);
 </script>
 
 <style lang="scss" scoped></style>

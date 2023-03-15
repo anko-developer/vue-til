@@ -29,17 +29,16 @@
 </template>
 
 <script setup>
-import { ref, computed, defineEmits } from 'vue';
+import { ref, computed, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { fetchPost, editPost } from '@/api/posts';
-import bus from '@/utils/bus.js';
 
 const route = useRoute();
 const router = useRouter();
+const emitter = inject('emitter');
 const title = ref('');
 const contents = ref('');
 const logMessage = ref(null);
-const emit = defineEmits(['refresh']);
 
 const isTitleValid = computed(() => {
 	return title.value.length <= 10;
@@ -64,7 +63,7 @@ const submitForm = async () => {
 			title: title.value,
 			contents: contents.value,
 		});
-		bus.emit('refresh');
+		emitter.emit('refresh');
 		router.push({ name: 'main' });
 	} catch (error) {
 		logMessage.value = error;
