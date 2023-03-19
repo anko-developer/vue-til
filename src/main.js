@@ -10,10 +10,18 @@ app.use(router);
 app.use(store);
 app.provide('emitter', emitter);
 
-// 전역 필터
+// 전역 필터를 이렇게 만들 수 있다
 app.config.globalProperties.$filters = {
 	formatDate(value) {
-		return new Date(value);
+		const date = new Date(value);
+		const year = date.getFullYear();
+		let month = date.getMonth() + 1;
+		month = month > 9 ? month : `0${month}`;
+		const day = date.getDate();
+		let hours = date.getHours();
+		hours = hours > 9 ? hours : `0${hours}`;
+		const minutes = date.getMinutes();
+		return `${year}-${month}-${day} ${hours}:${minutes}`;
 	},
 };
 
