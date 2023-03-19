@@ -34,8 +34,8 @@ const fetchData = async () => {
 	const { data } = await fetchPosts();
 	isLoading.value = false;
 	postItems.value = data.posts;
-	console.log('data', data);
-	console.log('postItems.value', postItems.value);
+	// console.log('data', data);
+	// console.log('postItems.value', postItems.value);
 };
 fetchData();
 

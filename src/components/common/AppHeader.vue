@@ -1,7 +1,7 @@
 <template>
 	<header>
 		<div>
-			<router-link to="/" class="logo">
+			<router-link :to="logoLink" class="logo">
 				TIL
 				<span v-if="isUserLogin">by {{ $store.state.username }}</span>
 			</router-link>
@@ -25,6 +25,7 @@
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import { deleteCookie } from '@/utils/cookies';
 
 const store = useStore();
 const router = useRouter();
@@ -35,8 +36,15 @@ const isUserLogin = computed(() => {
 
 const logoutUser = () => {
 	store.commit('clearUsername');
-	router.push({ name: 'main' });
+	store.commit('clearToken');
+	deleteCookie('til_auth');
+	deleteCookie('til_user');
+	router.push('/');
 };
+
+const logoLink = computed(() => {
+	return store.getters.isLogin ? '/main' : '/';
+});
 </script>
 
 <style scoped>
